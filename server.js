@@ -47,227 +47,45 @@ validateConfig();
 // ─── Model Mapping ─────────────────────────────────────────────────────────
 
 const MODEL_MAPPING = {
-  // ── High-Capability & Frontier Chat / RP ──
-  'gpt-4-turbo': 'moonshotai/kimi-k3',
-  'kimi-k3': 'moonshotai/kimi-k3',
-  'moonshotai/kimi-k3': 'moonshotai/kimi-k3',
-
-  'gpt-4o': 'deepseek-ai/deepseek-v4-pro-0813',
-  'deepseek-v4-pro': 'deepseek-ai/deepseek-v4-pro-0813',
-  'deepseek-v4-pro-0813': 'deepseek-ai/deepseek-v4-pro-0813',
-  'deepseek-ai/deepseek-v4-pro-0813': 'deepseek-ai/deepseek-v4-pro-0813',
-
-  'gpt-4-flash': 'deepseek-ai/deepseek-v4-flash-0731',
-  'deepseek-v4-flash': 'deepseek-ai/deepseek-v4-flash-0731',
-  'deepseek-v4-flash-0731': 'deepseek-ai/deepseek-v4-flash-0731',
-  'deepseek-ai/deepseek-v4-flash-0731': 'deepseek-ai/deepseek-v4-flash-0731',
-
+  // Big / flagship
   'gpt-4': 'nvidia/nemotron-3-ultra-550b-a55b',
-  'nemotron-ultra': 'nvidia/nemotron-3-ultra-550b-a55b',
-  'nvidia/nemotron-3-ultra-550b-a55b': 'nvidia/nemotron-3-ultra-550b-a55b',
+  'gpt-4-turbo': 'moonshotai/kimi-k3',
+  'claude-3-opus': 'z-ai/glm-5-3',
+  'm3': 'z-ai/glm-5-3',                      // was minimaxai/minimax-m3 (gone)
 
+  // Mid-tier
   'gpt-3.5-turbo': 'nvidia/nemotron-3-super-120b-a12b',
-  'nemotron-super': 'nvidia/nemotron-3-super-120b-a12b',
-  'nvidia/nemotron-3-super-120b-a12b': 'nvidia/nemotron-3-super-120b-a12b',
-
-  'gpt-3.5o': 'nvidia/nemotron-mini-4b-instruct',
-  'nvidia/nemotron-mini-4b-instruct': 'nvidia/nemotron-mini-4b-instruct',
-
-  'claude-3-opus': 'openai/gpt-oss-120b',
-  'openai/gpt-oss-120b': 'openai/gpt-oss-120b',
-
+  'gpt-4o': 'z-ai/glm-5-3-flash',            // was deepseek-v4-pro-0813 (gone)
+  'gemini-pro': 'google/gemma-4-31b-it',
   'claude-3-sonnet': 'openai/gpt-oss-20b',
-  'gpt-oss-20b': 'openai/gpt-oss-20b',
-  'openai/gpt-oss-20b': 'openai/gpt-oss-20b',
 
-  'gemini-pro': 'nvidia/llama-3.3-nemotron-super-49b-v1.5',
-  'nvidia/llama-3.3-nemotron-super-49b-v1.5': 'nvidia/llama-3.3-nemotron-super-49b-v1.5',
+  // Fast / light
+  'gpt-4-flash': 'nvidia/nemotron-3.5-lightning-30b-a3b', // deepseek-v4-flash-0731 is being deprecated
+  'gpt-3.5': 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
+  'gpt-3.5o': 'poolside/laguna-xs-2.1',
+  'gemini-turbo': 'meta/muse-glimmer-30b',
 
-  'gemini-turbo': 'meta/llama-3.3-70b-instruct',
-  'meta/llama-3.3-70b-instruct': 'meta/llama-3.3-70b-instruct',
-
-  'gemini-turbo?': 'abacusai/dracarys-llama-3.1-70b-instruct',
-  'abacusai/dracarys-llama-3.1-70b-instruct': 'abacusai/dracarys-llama-3.1-70b-instruct',
-
-  'gpt-3.5': 'qwen/qwen3.5-397b-a17b',
-  'qwen/qwen3.5-397b-a17b': 'qwen/qwen3.5-397b-a17b',
-
-  'glm-5.2': 'z-ai/glm-5.2',
-  'z-ai/glm-5.2': 'z-ai/glm-5.2',
-
-  'step-3.5-flash': 'stepfun-ai/step-3.5-flash',
-  'step-3.7-flash': 'stepfun-ai/step-3.7-flash',
-
-  // ── Reasoning & Agentic Models ──
-  'nemotron-lightning': 'nvidia/nemotron-3.5-lightning-30b-a3b',
-  'nemotron-3.5-lightning': 'nvidia/nemotron-3.5-lightning-30b-a3b',
-  'nvidia/nemotron-3.5-lightning-30b-a3b': 'nvidia/nemotron-3.5-lightning-30b-a3b',
-
-  'muse-glimmer': 'meta/muse-glimmer-30b',
-  'muse-glimmer-30b': 'meta/muse-glimmer-30b',
-  'meta/muse-glimmer-30b': 'meta/muse-glimmer-30b',
-
-  'laguna-xs': 'poolside/laguna-xs-2.1',
-  'laguna-xs-2.1': 'poolside/laguna-xs-2.1',
-  'poolside/laguna-xs-2.1': 'poolside/laguna-xs-2.1',
-
-  'diffusiongemma': 'google/diffusiongemma-26b-a4b-it',
-  'diffusiongemma-26b': 'google/diffusiongemma-26b-a4b-it',
-  'google/diffusiongemma-26b-a4b-it': 'google/diffusiongemma-26b-a4b-it',
-
-  'nemotron-omni': 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
-  'nemotron-nano-omni': 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
-  'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning': 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
-
-  // ── Vision & Multimodal Models ──
-  'cosmos-reasoner': 'nvidia/cosmos3-nano-reasoner',
-  'cosmos3-nano-reasoner': 'nvidia/cosmos3-nano-reasoner',
-  'nvidia/cosmos3-nano-reasoner': 'nvidia/cosmos3-nano-reasoner',
-
-  'llama-3.2-11b-vision': 'meta/llama-3.2-11b-vision-instruct',
-  'meta/llama-3.2-11b-vision-instruct': 'meta/llama-3.2-11b-vision-instruct',
-
-  'llama-3.2-90b-vision': 'meta/llama-3.2-90b-vision-instruct',
-  'meta/llama-3.2-90b-vision-instruct': 'meta/llama-3.2-90b-vision-instruct',
-
-  'paligemma': 'google/google-paligemma',
-  'google-paligemma': 'google/google-paligemma',
-  'google/google-paligemma': 'google/google-paligemma',
-
-  // ── Mistral Models ──
-  'mistral': 'mistralai/mistral-large-3-675b-instruct-2512',
-  'mistral-turbo': 'mistralai/mistral-medium-3.5-128b',
-  'mistral-pro': 'mistralai/mistral-small-4-119b-2603',
+  // Mistral aliases (only mistral-nemotron survives)
+  'mistral': 'mistralai/mistral-nemotron',
   'mistral-nemo': 'mistralai/mistral-nemotron',
-  'mistralai/mistral-nemotron': 'mistralai/mistral-nemotron',
-  'mistral-fast': 'mistralai/ministral-14b-instruct-2512',
+  'mistral-turbo': 'z-ai/glm-5-3-flash',
+  'mistral-pro': 'google/gemma-4-31b-it',
+  'mistral-fast': 'nvidia/nemotron-3.5-lightning-30b-a3b',
 
-  // ── Google Gemma Series ──
+  // Google-style aliases
   'google-light': 'google/gemma-4-31b-it',
-  'gemma-4-31b': 'google/gemma-4-31b-it',
-  'google/gemma-4-31b-it': 'google/gemma-4-31b-it',
-  'google-lighter': 'google/gemma-3n-e4b-it',
-  'google-lightest': 'google/gemma-2-2b-it',
+  'google-lightest': 'meta/muse-glimmer-30b',
+  'google-lighter': 'poolside/laguna-xs-2.1',
 
-  // ── Specialized: Translation & Voicechat ──
-  'nemotron-voicechat': 'nvidia/nemotron-voicechat',
-  'nvidia/nemotron-voicechat': 'nvidia/nemotron-voicechat',
-
-  'riva-translate': 'nvidia/riva-translate-4b-instruct-v2',
-  'riva-translate-v2': 'nvidia/riva-translate-4b-instruct-v2',
-  'nvidia/riva-translate-4b-instruct-v2': 'nvidia/riva-translate-4b-instruct-v2',
-  'riva-translate-v1': 'nvidia/riva-translate-4b-instruct-v1_1',
-  'nvidia/riva-translate-4b-instruct-v1_1': 'nvidia/riva-translate-4b-instruct-v1_1',
-
-  // ── Specialized: Calibration VLMs ──
-  'ising-1.5': 'nvidia/ising-calibration-1.5-31b',
-  'nvidia/ising-calibration-1.5-31b': 'nvidia/ising-calibration-1.5-31b',
-  'ising-1': 'nvidia/ising-calibration-1-35b-a3b',
-  'nvidia/ising-calibration-1-35b-a3b': 'nvidia/ising-calibration-1-35b-a3b',
-
-  // ── Active MiniMax Models (Deprecation Notice in Catalog) ──
-  // Kept active per user preference; nvidia marked minimax-m3 as "Deprecation in 3d"
-  'm3': 'minimaxai/minimax-m3',
-  'minimax-m3': 'minimaxai/minimax-m3',
-  'minimaxai/minimax-m3': 'minimaxai/minimax-m3',
-  'm2.7': 'minimaxai/minimax-m2.7',
-  'minimax-m2.7': 'minimaxai/minimax-m2.7'
+  // Vision (optional)
+  'gpt-4-vision': 'meta/llama-3.2-90b-vision-instruct'
 };
 
-/*
- ─── FREE NIM CATALOG: NON-CHAT / SPECIALIZED USE-CASE MODELS ────────────────
- The following models are free endpoints on build.nvidia.com, but they do NOT
- expose an OpenAI-compatible /v1/chat/completions endpoint.
- They are documented here for catalog familiarity, reference, and manual API calls:
-
- [1. AUDIO PROCESSING & TTS]
- • 'nvidia/bnr'
-   - Name: Background Noise Removal
-   - Use Case: Cleans unwanted ambient noise from audio to improve speech intelligibility.
-   - Endpoint: Specialized Audio REST endpoint.
-
- • 'nvidia/studiovoice'
-   - Name: Studio Voice
-   - Use Case: Enhances noisy, low-quality microphone speech into studio-quality audio.
-   - Endpoint: Specialized Audio REST endpoint.
-
- • 'nvidia/magpie-tts-zeroshot'
-   - Name: Magpie TTS Zero-Shot
-   - Use Case: Expressive and engaging text-to-speech generated from short audio samples.
-   - Endpoint: Dedicated Text-to-Speech (TTS) endpoint.
-
- [2. VIDEO GENERATION & WORLD MODELS]
- • 'nvidia/cosmos3-nano'
-   - Name: Cosmos 3 Nano
-   - Use Case: Generates physics-aware videos from text or image prompts for physical AI development.
-   - Endpoint: Specialized Video Generation endpoint.
-
- • 'nvidia/cosmos-transfer2.5-2b'
-   - Name: Cosmos Transfer 2.5 2B
-   - Use Case: Generates physics-aware video world states using spatial control & simulation inputs.
-   - Endpoint: Synthetic Data Generation / World Model endpoint.
-
- • 'nvidia/cosmos-transfer1-7b'
-   - Name: Cosmos Transfer 1 7B (Deprecation in 3d)
-   - Use Case: Preceding generation video world state model.
-   - Endpoint: Synthetic Data Generation endpoint.
-
- [3. COMPUTER VISION & VIDEO ANALYSIS]
- • 'nvidia/synthetic-video-detector'
-   - Name: Synthetic Video Detector
-   - Use Case: AI microservice to detect whether video content is AI-generated (deepfake detection).
-   - Endpoint: Specialized Computer Vision endpoint.
-
- • 'nvidia/active-speaker-detection'
-   - Name: Active Speaker Detection
-   - Use Case: Identifies and tracks speaker bounding boxes across sequential video frames.
-   - Endpoint: Specialized Computer Vision endpoint.
-
- [4. AUTONOMOUS DRIVING & 3D PERCEPTION]
- • 'nvidia/streampetr'
-   - Name: StreamPETR
-   - Use Case: Multi-frame temporal object detection using sparse queries for autonomous driving.
-   - Endpoint: Robotics / Autonomous Vehicle perception endpoint.
-
- • 'nvidia/sparsedrive'
-   - Name: SparseDrive
-   - Use Case: End-to-end autonomous driving stack: perception, prediction, and planning.
-   - Endpoint: Robotics / Autonomous Vehicle perception endpoint.
-
- • 'nvidia/bevformer'
-   - Name: BEVFormer
-   - Use Case: Multi-camera Bird's-Eye-View (BEV) 3D perception transformer for vehicles.
-   - Endpoint: Robotics / Autonomous Vehicle perception endpoint.
-
- [5. EMBEDDINGS & RETRIEVAL]
- • 'nvidia/nemotron-3-embed-1b'
-   - Name: Nemotron 3 Embed 1B
-   - Use Case: High-efficiency 1B embedding model for RAG, vector databases, and semantic search.
-   - Endpoint: Uses /v1/embeddings (OpenAI format embedding endpoint).
-
- [6. CONTENT MODERATION & SAFETY CLASSIFIERS]
- • 'nvidia/nemotron-3.5-content-safety'
-   - Name: Nemotron 3.5 Content Safety
-   - Use Case: Multilingual & multimodal moderation classifier for toxic/unsafe content.
-   - Endpoint: Classification / Guardrails endpoint.
-
- • 'nvidia/llama-3_1-nemotron-safety-guard-8b-v3'
-   - Name: Llama 3.1 Nemotron Safety Guard 8B v3
-   - Use Case: Moderation guard model for scanning inputs/outputs against safety taxonomy.
-   - Endpoint: Classification / Guardrails endpoint.
-
- • 'meta/llama-guard-4-12b'
-   - Name: Llama Guard 4 12B
-   - Use Case: Multimodal input/output safety classifier from Meta.
-   - Endpoint: Classification / Guardrails endpoint.
-───────────────────────────────────────────────────────────────────────────────
-*/
-
 const FALLBACK_MODELS = [
-  'mistralai/mistral-medium-3.5-128b',
-  'mistralai/mistral-small-4-119b-2603',
-  'nvidia/llama-3.3-nemotron-super-49b-v1.5',
-  'google/gemma-4-31b-it'
+  'nvidia/nemotron-3-super-120b-a12b',   // was mistral-medium-3.5-128b
+  'z-ai/glm-5-3-flash',                  // was mistral-small-4-119b-2603
+  'nvidia/nemotron-3.5-lightning-30b-a3b', // was llama-3.3-nemotron-super-49b-v1.5
+  'google/gemma-4-31b-it'                // unchanged, still free
 ];
 
 // ─── Middleware ─────────────────────────────────────────────────────────────
