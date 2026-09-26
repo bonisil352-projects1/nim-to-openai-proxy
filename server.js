@@ -54,6 +54,7 @@ const MODEL_MAPPING = {
   'm3': 'z-ai/glm-5-3',                      // was minimaxai/minimax-m3 (gone)
 
   // Mid-tier
+  'm2' : 'deepseek-ai/deepseek-v4.1-flash',
   'gpt-3.5-turbo': 'nvidia/nemotron-3-super-120b-a12b',
   'gpt-4o': 'z-ai/glm-5-3-flash',            // was deepseek-v4-pro-0813 (gone)
   'gemini-pro': 'google/gemma-4-31b-it',
