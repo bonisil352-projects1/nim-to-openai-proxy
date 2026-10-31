@@ -49,26 +49,26 @@ validateConfig();
 const MODEL_MAPPING = {
   // Big / flagship
   'gpt-4': 'nvidia/nemotron-3-ultra-550b-a55b',
-  'gpt-4-turbo': 'moonshotai/kimi-k3',
-  'claude-3-opus': 'z-ai/glm-5-3',
-  'm3': 'z-ai/glm-5-3',                      // was minimaxai/minimax-m3 (gone)
+  'gpt-4-turbo': 'stepfun-ai/step-5-preview',
+  'claude-3-opus': 'mistralai/mistral-large-4',
+  'm3': 'minimaxai/minimax-m3.1-flash',
 
   // Mid-tier
-  'm2' : 'deepseek-ai/deepseek-v4.1-flash',
-  'gpt-3.5-turbo': 'nvidia/nemotron-3-super-120b-a12b',
-  'gpt-4o': 'z-ai/glm-5-3-flash',            // was deepseek-v4-pro-0813 (gone)
+  'm2': 'deepseek-ai/deepseek-v4.1-flash',
+  'gpt-3.5-turbo': 'nvidia/nemotron-3.5-super-vl-120b-a12b',
+  'gpt-4o': 'z-ai/glm-5-3-flash',
   'gemini-pro': 'google/gemma-4-31b-it',
   'claude-3-sonnet': 'openai/gpt-oss-20b',
 
   // Fast / light
-  'gpt-4-flash': 'nvidia/nemotron-3.5-lightning-30b-a3b', // deepseek-v4-flash-0731 is being deprecated
+  'gpt-4-flash': 'nvidia/nemotron-3.5-lightning-30b-a3b',
   'gpt-3.5': 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
   'gpt-3.5o': 'poolside/laguna-xs-2.1',
   'gemini-turbo': 'meta/muse-glimmer-30b',
 
-  // Mistral aliases (only mistral-nemotron survives)
-  'mistral': 'mistralai/mistral-nemotron',
-  'mistral-nemo': 'mistralai/mistral-nemotron',
+  // Mistral aliases (mistral-nemotron is gone, Large 4 replaces it)
+  'mistral': 'mistralai/mistral-large-4',
+  'mistral-nemo': 'mistralai/mistral-large-4',
   'mistral-turbo': 'z-ai/glm-5-3-flash',
   'mistral-pro': 'google/gemma-4-31b-it',
   'mistral-fast': 'nvidia/nemotron-3.5-lightning-30b-a3b',
@@ -78,15 +78,15 @@ const MODEL_MAPPING = {
   'google-lightest': 'meta/muse-glimmer-30b',
   'google-lighter': 'poolside/laguna-xs-2.1',
 
-  // Vision (optional)
+  // Vision
   'gpt-4-vision': 'meta/llama-3.2-90b-vision-instruct'
 };
 
 const FALLBACK_MODELS = [
-  'nvidia/nemotron-3-super-120b-a12b',   // was mistral-medium-3.5-128b
-  'z-ai/glm-5-3-flash',                  // was mistral-small-4-119b-2603
-  'nvidia/nemotron-3.5-lightning-30b-a3b', // was llama-3.3-nemotron-super-49b-v1.5
-  'google/gemma-4-31b-it'                // unchanged, still free
+  'nvidia/nemotron-3.5-super-vl-120b-a12b',
+  'z-ai/glm-5-3-flash',
+  'nvidia/nemotron-3.5-lightning-30b-a3b',
+  'google/gemma-4-31b-it'
 ];
 
 // ─── Middleware ─────────────────────────────────────────────────────────────
@@ -302,7 +302,7 @@ app.post('/v1/chat/completions', async (req, res) => {
     } = req.body;
 
     // Passthrough support: Use alias if found, otherwise pass model directly if provided
-    const primaryModel = MODEL_MAPPING[model] || model || 'nvidia/llama-3.3-nemotron-super-49b-v1.5';
+    const primaryModel = MODEL_MAPPING[model] || model || 'nvidia/nemotron-3.5-lightning-30b-a3b';
     const modelChain = [primaryModel, ...FALLBACK_MODELS.filter(m => m !== primaryModel)];
 
     const baseRequest = {
